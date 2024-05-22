@@ -1,7 +1,6 @@
 
 package org.abnerdelcid.controller;
 
-import java.awt.Image;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -30,6 +30,7 @@ public class MenuPrincipalController implements Initializable{
         this.escenarioPrincipal = escenarioPrincipal;
     }
     
+    
     public void click(ActionEvent event){
             if (event.getSource() == btnMenuclientes){ 
                 escenarioPrincipal.menuClientesView();

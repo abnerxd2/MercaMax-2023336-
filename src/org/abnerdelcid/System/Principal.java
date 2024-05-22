@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import org.abnerdelcid.controller.MenuClientesController;
 import org.abnerdelcid.controller.MenuPrincipalController;
 import org.abnerdelcid.controller.MenuProductosController;
-import org.abnerdelcid.controller.MenuProveedoresController;
+ import org.abnerdelcid.controller.MenuProveedoresController;
 import org.abnerdelcid.controller.VistaprogramadorController;
 
 /**
@@ -31,7 +31,7 @@ public class Principal extends Application {
     
     public void start(Stage escenarioPrincipal) throws IOException {
         this.escenarioPrincipal = escenarioPrincipal;
-        this.escenarioPrincipal.setTitle("Super Kinal");
+        this.escenarioPrincipal.setTitle("Super");
         menuPrincipalView();
         escenarioPrincipal.show();
         
@@ -83,7 +83,7 @@ public class Principal extends Application {
 
         }
     }
-        
+       
     public void MenuProveedores(){
         try{
             MenuProveedoresController MenuProveedores = (MenuProveedoresController)cambiarEscena("VistaProveedores.fxml",866,489);
