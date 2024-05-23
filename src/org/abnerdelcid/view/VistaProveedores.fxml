@@ -20,7 +20,7 @@
             <Image url="@../images/VistaProveedores.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnRegresar" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#clicRegresar" prefHeight="28.0" prefWidth="67.0" stylesheets="@../resource/Botones.css" text="regresar" textFill="#fffefc">
+      <Button fx:id="btnRegresarP" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="28.0" prefWidth="67.0" stylesheets="@../resource/Botones.css" text="regresar" textFill="#fffefc">
          <styleClass>
             <String fx:value="bunttom2" />
             <String fx:value="bunttomTran" />
@@ -39,7 +39,7 @@
           <RowConstraints maxHeight="58.0" minHeight="10.0" prefHeight="46.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btnAgregar" mnemonicParsing="false" onAction="#agregar" prefHeight="45.0" prefWidth="134.0" stylesheets="@../resource/Botones.css" text="Agregar" textFill="#fffefc">
+            <Button fx:id="btnAgregarP" mnemonicParsing="false" onAction="#guardar" prefHeight="45.0" prefWidth="134.0" stylesheets="@../resource/Botones.css" text="Agregar" textFill="#fffefc">
                <styleClass>
                   <String fx:value="bunttom2" />
                   <String fx:value="bunttomTran" />
@@ -52,7 +52,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#eliminar" prefHeight="56.0" prefWidth="134.0" stylesheets="@../resource/Botones.css" text="Eliminar" textFill="#fffefc" GridPane.rowIndex="2">
+            <Button fx:id="btnEliminarP" mnemonicParsing="false" onAction="#eliminar" prefHeight="56.0" prefWidth="134.0" stylesheets="@../resource/Botones.css" text="Eliminar" textFill="#fffefc" GridPane.rowIndex="2">
                <styleClass>
                   <String fx:value="bunttom2" />
                   <String fx:value="bunttomTran" />
@@ -65,7 +65,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnEditar" mnemonicParsing="false" onAction="#editar" prefHeight="45.0" prefWidth="134.0" stylesheets="@../resource/Botones.css" text="Editar" textFill="#fffefc" GridPane.rowIndex="4">
+            <Button fx:id="btnEditarP" mnemonicParsing="false" onAction="#editar" prefHeight="45.0" prefWidth="134.0" stylesheets="@../resource/Botones.css" text="Editar" textFill="#fffefc" GridPane.rowIndex="4">
                <styleClass>
                   <String fx:value="bunttom2" />
                   <String fx:value="bunttomTran" />
@@ -78,7 +78,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button fx:id="btnReporte" mnemonicParsing="false" onAction="#reporte" prefHeight="45.0" prefWidth="134.0" stylesheets="@../resource/Botones.css" text="Rporte" textFill="#fffefc" GridPane.rowIndex="6">
+            <Button fx:id="btnReportesP" mnemonicParsing="false" onAction="#reportes" prefHeight="45.0" prefWidth="134.0" stylesheets="@../resource/Botones.css" text="Rporte" textFill="#fffefc" GridPane.rowIndex="6">
                <styleClass>
                   <String fx:value="bunttom2" />
                   <String fx:value="bunttomTran" />
@@ -89,13 +89,15 @@
       <TableView fx:id="tbProveedores" layoutX="171.0" layoutY="275.0" onMouseClicked="#seleccionarElemento" prefHeight="200.0" prefWidth="680.0">
         <columns>
           <TableColumn fx:id="colCodigoP" prefWidth="35.0" text="codigoProveedor" />
-          <TableColumn fx:id="colNitP" prefWidth="96.0" text="NITProveedor" />
-            <TableColumn fx:id="colNombreP" prefWidth="94.0" text="nombreProveedor" />
-            <TableColumn fx:id="colApellidoPP" prefWidth="100.0" text="apellidoProveedor" />
-            <TableColumn fx:id="colDireccionP" prefWidth="70.0" text="direccionProveedor" />
-            <TableColumn fx:id="colRazonScialP" text="razonSocial" />
-            <TableColumn fx:id="colTelefonoP" prefWidth="98.0" text="contactoPrincipal" />
-            <TableColumn fx:id="colPagwebP" prefWidth="103.0" text="paginaWebProveedor" />
+          <TableColumn fx:id="colNITP" prefWidth="96.0" text="NITProveedor" />
+            <TableColumn fx:id="colNomP" prefWidth="94.0" text="nombreProveedor" />
+            <TableColumn fx:id="colApeP" prefWidth="100.0" text="apellidoProveedor" />
+            <TableColumn fx:id="colDireP" prefWidth="70.0" text="direccionProveedor" />
+            <TableColumn fx:id="colRazonS" text="razonSocial" />
+            <TableColumn fx:id="colContactoP" prefWidth="98.0" text="contactoPrincipal" />
+            <TableColumn fx:id="colSitioWeb" prefWidth="103.0" text="paginaWebProveedor" />
+            <TableColumn fx:id="colTelP" prefWidth="103.0" text="telefono" />
+            <TableColumn fx:id="colEmailP" prefWidth="103.0" text="Email" />
         </columns>
       </TableView>
       <GridPane layoutX="7.0" layoutY="76.0" mouseTransparent="true">
@@ -113,8 +115,8 @@
             <Text fill="#f2f2f2" layoutX="10.0" layoutY="32.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NIT" wrappingWidth="87.98307228088379" GridPane.rowIndex="1" />
             <Text fill="#f2f2f2" layoutX="10.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Telefono" wrappingWidth="87.98307228088379" GridPane.rowIndex="2" />
             <TextField fx:id="txtCodigoP" GridPane.columnIndex="1" />
-            <TextField fx:id="txtNitP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="txtTelefonoP" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="txtNITP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="txtTelefono" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="232.0" layoutY="121.0" prefHeight="135.0" prefWidth="609.0">
@@ -138,13 +140,13 @@
             <Text fill="#f2f2f2" strokeType="OUTSIDE" strokeWidth="0.0" text="Nombre " wrappingWidth="87.98307228088379" />
             <Text fill="#f2f2f2" layoutX="10.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Apellido" wrappingWidth="87.98307228088379" GridPane.rowIndex="2" />
             <Text fill="#f2f2f2" layoutX="10.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Direccion" wrappingWidth="87.98307228088379" GridPane.rowIndex="4" />
-            <TextField fx:id="txtNombreP" GridPane.columnIndex="2" />
-            <TextField fx:id="txtApellidoP" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <TextField fx:id="txtNombresP" GridPane.columnIndex="2" />
+            <TextField fx:id="txtApellidosP" GridPane.columnIndex="2" GridPane.rowIndex="2" />
             <TextField fx:id="txtDireccionP" GridPane.columnIndex="2" GridPane.rowIndex="4" />
             <Text fill="#f2f2f2" layoutX="10.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Razon Social" wrappingWidth="87.98307228088379" GridPane.columnIndex="4" />
             <Text fill="#f2f2f2" layoutX="319.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pag Web" wrappingWidth="87.98307228088379" GridPane.columnIndex="4" GridPane.rowIndex="2" />
-            <TextField fx:id="txtRazonSocialP" GridPane.columnIndex="6" />
-            <TextField fx:id="txtpaginaWebProveedor" GridPane.columnIndex="6" GridPane.rowIndex="2" />
+            <TextField fx:id="txtRazonSocial" GridPane.columnIndex="6" />
+            <TextField fx:id="txtSitioWeb" GridPane.columnIndex="6" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

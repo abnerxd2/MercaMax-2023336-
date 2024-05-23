@@ -11,7 +11,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import org.abnerdelcid.controller.MenuCargoEmpleadoController;
 import org.abnerdelcid.controller.MenuClientesController;
+import org.abnerdelcid.controller.MenuComprasController;
 import org.abnerdelcid.controller.MenuPrincipalController;
 import org.abnerdelcid.controller.MenuProductosController;
  import org.abnerdelcid.controller.MenuProveedoresController;
@@ -65,7 +67,7 @@ public class Principal extends Application {
     public void menuClientesView(){
         try{
 
-          MenuClientesController menuClientesView = (MenuClientesController)cambiarEscena("MenuClientesView.fxml",866,489);
+          MenuClientesController menuClientesView = (MenuClientesController)cambiarEscena("VistaClientesView.fxml",866,489);
             menuClientesView.setEscenarioPrincipal(this);
         }catch(Exception e){
             e.printStackTrace();
@@ -102,6 +104,29 @@ public class Principal extends Application {
                 MenuProductos.setEscenarioPrincipal(this);
             }catch(Exception e){
                 e.printStackTrace();
+
+
+            }
+        }
+        
+            
+        public void MenuCompras(){
+            try{
+                MenuComprasController MenuCompras = (MenuComprasController)cambiarEscena("VistaCompras.fxml",978,550);
+                MenuCompras.setEscenarioPrincipal(this);
+            }catch(Exception e){
+                e.printStackTrace();
+
+
+            }
+        }
+        
+        public void MenuCArgoEmpleado(){
+               try{
+                    MenuCargoEmpleadoController MenuCArgoEmpleado = (MenuCargoEmpleadoController)cambiarEscena("VistaCargoEmpleado.fxml",978,550);
+                    MenuCArgoEmpleado.setEscenarioPrincipal(this);
+                }catch(Exception e){
+                    e.printStackTrace();
 
 
             }

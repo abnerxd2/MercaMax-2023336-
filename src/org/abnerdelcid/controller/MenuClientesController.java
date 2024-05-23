@@ -149,7 +149,7 @@ public class MenuClientesController implements Initializable {
         registro.setDireccionCliente(txtDireccionC.getText());
         registro.setCorreoCliente(txtCorreoC.getText());
         try{
-            PreparedStatement procedimiento = Conection.getInstance().getConexion().prepareCall("{call sp_AgregarClientes(?, ?, ?, ?, ?, ?, ?)}");          
+            PreparedStatement procedimiento = Conection.getInstance().getConexion().prepareCall("{call sp_agregarCliente(?, ?, ?, ?, ?, ?, ?)}");          
             procedimiento.setInt(1, registro.getCodigoCliente());
             procedimiento.setString(2, registro.getNITCliente());
             procedimiento.setString(3,registro.getNombreCliente());

@@ -26,10 +26,12 @@ import org.abnerdelcid.db.Conection;
 
 public class MenuProveedoresController implements Initializable {
  private ObservableList<Proveedores> listaProveedores;
-    private Principal escenarioPrincipal;
+    
      private enum operador {
         AGREGRAR, ELIMINAR, EDITAR, ACTUALIZAR, CANCELAR, NINGUNO
     }
+     
+     
     private operador tipoDeOperador = operador.NINGUNO;
     @FXML
     private TableView tvPoveedores;
@@ -84,60 +86,54 @@ public class MenuProveedoresController implements Initializable {
     @FXML
     private Button btnRegresarP;
     
-    
+    private Principal escenarioPrincipal;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         cargarDatos();
-       desactivarControles();
+        cargarDatos();
     }    
 
-    
     public void cargarDatos() {
         tvPoveedores.setItems(getProveedores());
-        colCodP.setCellValueFactory(new PropertyValueFactory<Proveedores, Integer>("codigoProveedor"));
-        colNITP.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("NITProveedor"));
-
-        colDireP.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("direccionProveedor"));
-        colRazonS.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("razonSocial"));
-        colContactoP.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("contactoPrincipal"));
-        colSitioWeb.setCellValueFactory(new PropertyValueFactory<Proveedores, String>("paginaWeb"));
-
+        colCodP.setCellValueFactory(new PropertyValueFactory<>("codigoProveedor"));
+        colNITP.setCellValueFactory(new PropertyValueFactory<>("NITproveedor"));
+        colNITP.setCellValueFactory(new PropertyValueFactory<>("nombreProveedor"));
+        colDireP.setCellValueFactory(new PropertyValueFactory<>("apellidoProveedor"));
+        colRazonS.setCellValueFactory(new PropertyValueFactory<>("direccionProveedor"));
+        colContactoP.setCellValueFactory(new PropertyValueFactory<>("razonSocial"));
+        colSitioWeb.setCellValueFactory(new PropertyValueFactory<>("paginaWeb"));
     }
-
     public void seleccionarElemento() {
         txtCodigoP.setText(String.valueOf(((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getCodigoProveedor()));
-        txtNITP.setText((((Proveedores)tvPoveedores.getSelectionModel().getSelectedItem()).getNITProveedor()));
+        txtNITP.setText((((Proveedores)tvPoveedores.getSelectionModel().getSelectedItem()).getNITproveedor()));
         txtNombresP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getNombreProveedor()));
         txtApellidosP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getApellidoProveedor()));
         txtDireccionP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getDireccionProveedor()));
         txtRazonSocial.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getRvazonSocial()));
         txtContactoP.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getContactoPrincipal()));
-        txtSitioWeb.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getPaginaWebProveedor()));
+        txtSitioWeb.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getPaginaWeb()));
         txtTelefono.setText((((Proveedores) tvPoveedores.getSelectionModel().getSelectedItem()).getContactoPrincipal()));
     }
 
-    public ObservableList<Proveedores> getProveedores() {
-        ArrayList<Proveedores> listaPro = new ArrayList<>();
-        try {
-            PreparedStatement procedimiento = Conection.getInstance().getConexion().prepareCall("{call sp_mostrarproveedor()}");
+    public ObservableList<Proveedores> getProveedores(){
+        ArrayList<Proveedores> lista = new ArrayList<>(); 
+        try{
+            PreparedStatement procedimiento = Conection.getInstance().getConexion().prepareCall("call sp_ListarProveedores()");
             ResultSet resultado = procedimiento.executeQuery();
-            while (resultado.next()) {
-                listaPro.add(new Proveedores(resultado.getInt("codigoProveedor"),
-                        resultado.getString("NITProveedor"),
-                        resultado.getString("nombresProveedor"),
-                        resultado.getString("apellidosProveedor"),
-                        resultado.getString("direccionProveedor"),
-                        resultado.getString("razonSocial"),
-                        resultado.getString("contactoPrincipal"),
-                        resultado.getString("paginaWeb"),
-                        resultado.getString("telefonoProveedor")
-          
+            while(resultado.next()){
+                lista.add(new Proveedores (resultado.getInt("codigoProveedor"), 
+                                        resultado.getString("NITproveedor"),
+                                        resultado.getString("nombreProveedor"),
+                                        resultado.getString("apellidoProveedor"),
+                                        resultado.getString("direccionProveedor"),
+                                        resultado.getString("razonSocial"),
+                                        resultado.getString("contactoPrincipal"),
+                                        resultado.getString("paginaWeb")
                 ));
             }
-        } catch (Exception e) {
+        }catch(Exception e){
             e.printStackTrace();
         }
-        return listaProveedores = FXCollections.observableList(listaPro);
+        return listaProveedores = FXCollections.observableArrayList(lista);
     }
 
     public void Agregar() {
@@ -170,25 +166,25 @@ public class MenuProveedoresController implements Initializable {
     public void guardar() {
         Proveedores registro = new Proveedores();
         registro.setCodigoProveedor(Integer.parseInt(txtCodigoP.getText()));
-        registro.setNITProveedor(txtNITP.getText());
+        registro.setNITproveedor(txtNITP.getText());
         registro.setNombreProveedor(txtNombresP.getText());
         registro.setApellidoProveedor(txtApellidosP.getText());
         registro.setDireccionProveedor(txtDireccionP.getText());
         registro.setRvazonSocial(txtRazonSocial.getText());
         registro.setContactoPrincipal(txtContactoP.getText());
-        registro.setPaginaWebProveedor(txtSitioWeb.getText());
+        registro.setPaginaWeb(txtSitioWeb.getText());
         registro.setContactoPrincipal(txtTelefono.getText());
 
         try {
             PreparedStatement procedimiento = Conection.getInstance().getConexion().prepareCall("{call sp_agregarproveedor(?,?,?,?,?,?,?,?,?,?)}");
             procedimiento.setInt(1, registro.getCodigoProveedor());
-            procedimiento.setString(2, registro.getNITProveedor());
+            procedimiento.setString(2, registro.getNITproveedor());
             procedimiento.setString(3, registro.getNombreProveedor());
             procedimiento.setString(4, registro.getApellidoProveedor());
             procedimiento.setString(5, registro.getDireccionProveedor());
             procedimiento.setString(6, registro.getRvazonSocial());
             procedimiento.setString(7, registro.getContactoPrincipal());
-            procedimiento.setString(8, registro.getPaginaWebProveedor());
+            procedimiento.setString(8, registro.getPaginaWeb());
             procedimiento.setString(9, registro.getContactoPrincipal());
             listaProveedores.add(registro);
         } catch (Exception e) {
@@ -278,23 +274,23 @@ public class MenuProveedoresController implements Initializable {
             PreparedStatement procedimiento = Conection.getInstance().getConexion().prepareCall("{call sp_editarproveedor(?,?,?,?,?,?,?,?,?,?)}");
             Proveedores registro = (Proveedores) tvPoveedores.getSelectionModel().getSelectedItem();
             registro.setCodigoProveedor(Integer.parseInt(txtCodigoP.getText()));
-            registro.setNITProveedor(txtNITP.getText());
+            registro.setNITproveedor(txtNITP.getText());
             registro.setNombreProveedor(txtNombresP.getText());
             registro.setApellidoProveedor(txtApellidosP.getText());
             registro.setDireccionProveedor(txtDireccionP.getText());
             registro.setRvazonSocial(txtRazonSocial.getText());
             registro.setContactoPrincipal(txtContactoP.getText());
-            registro.setPaginaWebProveedor(txtSitioWeb.getText());
+            registro.setPaginaWeb(txtSitioWeb.getText());
             registro.setContactoPrincipal(txtTelefono.getText());
             procedimiento.setInt(1, registro.getCodigoProveedor());
-            procedimiento.setString(2, registro.getNITProveedor());
+            procedimiento.setString(2, registro.getNITproveedor());
             procedimiento.setString(3, registro.getNombreProveedor());
             procedimiento.setString(4, registro.getApellidoProveedor());
             procedimiento.setString(5, registro.getDireccionProveedor());
             procedimiento.setString(6, registro.getRvazonSocial());
             procedimiento.setString(7, registro.getContactoPrincipal());
-            procedimiento.setString(8, registro.getPaginaWebProveedor());
-            procedimiento.setString(9, registro.getPaginaWebProveedor());
+            procedimiento.setString(8, registro.getPaginaWeb());
+            procedimiento.setString(9, registro.getPaginaWeb());
         } catch (Exception e) {
             e.printStackTrace();
         }

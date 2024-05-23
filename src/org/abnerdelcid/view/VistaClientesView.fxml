@@ -101,7 +101,7 @@
                </image>
             </ImageView>
          </graphic></Button>
-      <GridPane layoutX="168.0" layoutY="96.0" prefHeight="137.0" prefWidth="695.0">
+      <GridPane layoutX="168.0" layoutY="96.0" prefHeight="137.0" prefWidth="695.0" fx:id="xd">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="94.0" minWidth="10.0" prefWidth="63.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="132.0" minWidth="0.0" prefWidth="3.0" />

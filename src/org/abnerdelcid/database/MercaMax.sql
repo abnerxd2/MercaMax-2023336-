@@ -1,4 +1,4 @@
--- drop database if exists DBMercamax;
+-- drop database DBMercamax;
 Create database DBMercamax;
 use DBMercamax;
 
@@ -27,7 +27,7 @@ create table Proveedores(
 
 create table CargoEmpleado(
 	codigoCargoEmpleado int not null,
-	nombreCargo varchar(45),
+	nombreCargoEmpleado varchar(45),
 	descripcionCargo varchar(45),
 	primary key PK_codigoCargoEmpleado(codigoCargoEmpleado)
 );
@@ -137,9 +137,15 @@ Create table DetalleFactura(
 		references Productos (codigoProducto)
 );
 
--- -------------------- Procedimientos almacenados ---------------------
--- -------------------- Clientes --------------------------------------
--- -------------------- Agregar Clientes -----------------------------
+
+
+
+
+
+
+
+-- --------------------------------------------------------------------------------- Clientes --------------------------------------------------------------------------------------------------------------------------------------------------
+
 Delimiter $$
 	create procedure sp_agregarCliente (in codigoCliente int, NITcliente varchar(10), in nombreCliente varchar(50), in apellidoCliente varchar(50),
     in direccionCliente varchar(250), in telefonoCliente varchar(8), in correoCliente varchar(45))
@@ -151,10 +157,7 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_AgregarCliente(01, '67565788', 'Cris', 'Luna', 'Zona 7', '56567878','cluna-2023308@kinal.edu.gt');
-call sp_AgregarCliente(02, '77888659', 'Alexis', 'Donis', 'Zona 3', '41444122','adonis-2023565@kinal.edu.gt');
 
--- -----------------------------------------Listar Clientes -----------------------------------
 Delimiter $$
 	create procedure sp_ListarClientes()
 		Begin
@@ -171,7 +174,8 @@ Delimiter $$
 Delimiter ;
 
 call sp_ListarClientes();
--- -----------------------------Buscar Cliebtes ---------------------------------------------
+
+
 Delimiter $$
 	create procedure sp_BuscarClientes (in codCliente int)
 		Begin
@@ -199,9 +203,8 @@ Delimiter $$
 		End$$
 Delimiter ;
 
-call sp_EliminarClientes(02);
 
--- -----------------------------------------------Editar Clientes ------------------------------------------------------
+
 Delimiter $$
 	Create procedure sp_EditarCliente(in _codigoCliente int, _NITcliente varchar(10), in _nombreCliente varchar(50), in _apellidoCliente varchar(50),
     in _direccionCliente varchar(250), in _telefonoCliente varchar(8), in _correoCliente varchar(45))
@@ -219,12 +222,17 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_EditarCliente(01, '78789898', 'Christian', 'Sisimit', 'Zona 2', '78789090','csisimit-2023309@kinal.edu.gt');
-call sp_ListarClientes();
 
--- ------------------------------- Procedimientos Almacenados ---------------------------------------
--- ------------------------------- Proveedores ------------------------------------------------------
--- --------------------------------Agregar Proveedores ----------------------------------------------
+
+
+
+
+
+
+
+
+-- --------------------------------------------------------------------------------------- Proveedores ----------------------------------------------------------------------------------------------------------------------------------------
+
 Delimiter $$
 	Create procedure sp_AgregarProveedores (in codigoProveedor int, in NITproveedor varchar(10), in nombreProveedor varchar(60),
     in apellidoProveedor varchar(60), in direccionProveedor varchar(150), in razonSocial varchar(60), in contactoPrincipal varchar(50), in paginaWeb varchar (50))
@@ -236,10 +244,9 @@ Delimiter $$
 		end $$
 Delimiter ;
 
-call sp_AgregarProveedores(01,'9842749','Lionel','Messi','Zona 10','Vender','10101010','mundial2022.com');
-call sp_AgregarProveedores(02,'3352200','Cristiano','Penaldo','Zona 7','Vender','07070707','segundon2.com');
-call sp_AgregarProveedores(03,'3267676', 'Pescadito', 'Ruiz', 'Zona 17', 'Vender', '21212121', 'elmejordeGT.com');
-call sp_AgregarProveedores(04,'3232422', 'Pedri', 'Gonzales', 'Zona 8', 'Vender', '54665656', 'elcanariodelFCB.com')
+
+
+
 
 -- ----------------------------------- Listar Proveedores -------------------------------------------------------------------
 Delimiter $$
@@ -309,32 +316,31 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_EditarProveedor(01,'18122022','Leo','Messirve','Zona 10','Vender','10101919','elmejordelahistoria10.com');
-call sp_ListarProveedores();
+
 
 -- ---------------------  Procesedimientos Almacenados de Cargo Empleado --------------------------------
--- ---------------------- Agregar Cargo Empleado -------------------------------------------------------
+
+
+
 Delimiter $$
-	create procedure sp_agregarCargoEmpleado (in codigoCargoEmpleado int, in nombreCargo varchar(45), in descripcionCargo varchar(45))
+	create procedure sp_agregarCargoEmpleado (in codigoCargoEmpleado int, in nombreCargoEmpleado varchar(45), in descripcionCargo varchar(45))
 		begin
 		insert into CargoEmpleado (codigoCargoEmpleado, nombreCargo, descripcionCargo) 
-        values (codigoCargoEmpleado, nombreCargo, descripcionCargo);
+        values (codigoCargoEmpleado, nombreCargoEmpleado, descripcionCargo);
 	end $$
 Delimiter ;
     
-call sp_agregarCargoEmpleado (01,'Gerente', 'Supervisa a los supervisores');
-call sp_agregarCargoEmpleado (02,'Supervisor', 'Supervisa a diferentes empleados');
-call sp_agregarCargoEmpleado (03, 'Cajero', 'Esta encargado de la caja');
+
 
 -- ---------------------- Listar Cargo Empleado -------------------------------------------------------
 Delimiter $$
 	create procedure sp_ListarCargoEmpleado()
 		begin
 			select
-			CaE.codigoCargoEmpleado,
-			CaE.nombreCargo,
-			CaE.descripcionCargo
-			from CargoEmpleado CaE;
+			C.codigoCargoEmpleado,
+			C.nombreCargoEmpleado,
+			C.descripcionCargo
+			from CargoEmpleado C;
 	end $$
 Delimiter ;
 
@@ -342,14 +348,14 @@ call sp_ListarCargoEmpleado();
 
 -- ---------------------- Buscar Cargo Empleado -------------------------------------------------------
 Delimiter $$
-	create procedure sp_BuscarCargoEmpleado (in codCaEm int)
+	create procedure sp_BuscarCargoEmpleado (in cod int)
 		begin
 			select
-			CaE.codigoCargoEmpleado,
-			CaE.nombreCargo,
-			CaE.descripcionCargo
-			from CargoEmpleado CaE
-			where codigoCargoEmpleado = codCaEm;
+			C.codigoCargoEmpleado,
+			C.nombreCargoEmpleado,
+			C.descripcionCargo
+			from CargoEmpleado C
+			where codigoCargoEmpleado = cod;
 	end $$
 delimiter ;
 
@@ -373,16 +379,14 @@ Delimiter $$
 		update CargoEmpleado CargoEmpleado
 			set
             CargoEmpleado.codigoCargoEmpleado = codEmpleado,
-			CargoEmpleado.nombreCargo = nomCargo,
+			CargoEmpleado.nombreCargoEmpleado = nomCargo,
 			CargoEmpleado.descripcionCargo = deCargo
 			where codigoCargoEmpleado = codEmpleado;
 	end $$
 delimiter ;       
-         
-call sp_EditarCargoEmpleado(01, 'Gerente General','Supervisa a todos los gerentes');
-call sp_ListarCargoEmpleado();
--- ----------------------------- Procedimiento Almacenado ---------------------------------
--- ---------------------------- TipoProducto ----------------------------------------------
+
+
+
 
 -- --------------------------- Agregar Tipo Producto-------------------------------------
 Delimiter $$
@@ -393,10 +397,7 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call Sp_agregarTipoProducto (01, 'Es un producto alimenticio');
-call Sp_agregarTipoProducto (02, 'Es un producto de tipo alcholico');
-call Sp_agregarTipoProducto (03, 'Es un producto de limpieza');
-call Sp_agregarTipoProducto (04, 'Es un producto escolar');
+
 
 -- --------------------------- Listar Tipo Producto-------------------------------------
 Delimiter $$
@@ -448,11 +449,8 @@ Delimiter $$
 	end $$
 delimiter ;
           
-call sp_EditarTipoProducto(01,'Es un producto bebible');
-call sp_ListarTipoProducto();
 
--- ---------------------------- Procedimiento Almacenado---------------------------------
--- ---------------------------- Compras ------------------------------------------------
+
 
 -- --------------------------- Agregar Compras -------------------------------------
 Delimiter $$
@@ -463,9 +461,7 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call Sp_agregarCompras (01, '2024-01-22', 'compra realisada', 25.05);
-call Sp_agregarCompras (02, '2024-02-23', 'compra realisada', 22.50);
-call Sp_agregarCompras (03, '2022-01-02', 'compra no realisada', 15.50);
+
 
 -- --------------------------- Listar Compras -------------------------------------
 Delimiter $$
@@ -496,7 +492,7 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_BuscarCompras(01);
+
 
 -- --------------------------- Eliminar Compras -------------------------------------
 Delimiter $$
@@ -507,7 +503,7 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_EliminarCompras(02);
+
 
 -- --------------------------- Editar Compras -------------------------------------
 Delimiter $$
@@ -523,8 +519,7 @@ Delimiter $$
 		end $$
 delimiter ;    
             
-call sp_EditarCompras(01, '2024-01-23' , 'No se pudo realizar', 30.55);
-call sp_ListarCompras();
+
 
 -- --------------------------- Procedimiento Almacenado -----------------------------
 -- --------------------------- Email Proveedor --------------------------------------
@@ -538,8 +533,7 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_agregarEmailProveedor(01, 'lionesmessi10@gmail.com', 'Correo de trabajo', 01);
-call sp_agregarEmailProveedor(02, 'pescadito21@gmail.com', 'Correo de institucional', 03);
+
 
 -- --------------------------- Editar Email Proveedor -------------------------------
 Delimiter $$
@@ -570,7 +564,7 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_BuscarEmailProvedor(01);
+
 
 -- ---------------------------- Eliminar Email Proveedor ----------------------------
 Delimiter $$
@@ -581,7 +575,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_EliminarEmailProveedor(02);
 
 -- --------------------------- Editar Email Proveedor -------------------------------
 Delimiter $$
@@ -597,11 +590,9 @@ Delimiter $$
 		end $$
 delimiter ;   
 
-call sp_EditarEmailProveedor(01, 'elgoat10@colegio.com', 'Correo del colegio', 01);
-call sp_ListarEmailProveedor();
 
--- --------------------------- Procedimiento Almacenado -----------------------------
--- --------------------------- Telefono Proveedor --------------------------------------
+
+
 
 -- --------------------------- Agregar Telefono Proveedor -----------------------------
 Delimiter $$
@@ -612,8 +603,7 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_agregarTelefonoProveedor(01, '12123434', '98987676', 'El primer numero es personal', 01);
-call sp_agregarTelefonoProveedor(02, '56567889', '45457698', 'El segundo numero es de casa', 03);
+
 
 -- --------------------------- Listar Telefono Proveedor -------------------------------
 Delimiter $$
@@ -646,7 +636,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_BuscarTelefonoProvedor(01);
 
 -- ---------------------------- Eliminar Telefono Proveedor ----------------------------
 Delimiter $$
@@ -657,7 +646,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_EliminarTelefonoProveedor(02);
 
 -- --------------------------- Editar Telefono Proveedor -------------------------------
 Delimiter $$
@@ -674,10 +662,8 @@ Delimiter $$
 		end $$
 delimiter ;   
 
-call sp_EditarTelefonoProveedor(01, '76768910', '12767612', 'El segundo numero es de casa', 01);
-call sp_ListarTelefonoProveedor();
 
--- --------------------------- Procedimiento Almacenado -----------------------------
+
 -- --------------------------- Productos --------------------------------------
 
 -- --------------------------- Agregar Productos ------------------------------
@@ -690,9 +676,6 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_agregarProductos(01, 'Es una pizza mediana', 40.00, 30.50, 20.30, 'PizzaMediana.png', 20, 01, 01);
-call sp_agregarProductos(02, 'Es un detergente', 45.00, 32.50, 25.30, 'Detergente.png', 35, 03, 03);
-call sp_agregarProductos(03, 'Es un lapiz', '15.99', 10.99, 6.99, 'Lapiz.png', '100', 04, 04);
 
 -- --------------------------- Listar Productos -------------------------------
 Delimiter $$
@@ -765,9 +748,7 @@ Delimiter $$
 				where codigoProducto = codProducto;
 		end $$
 delimiter ;   
-
-call sp_EditarProductos(01, 'Es una hamburguesa', '30.75', '20.50', '15.00', 'hamburguesa.png', 40, 01, 01);
-call sp_ListarProductos();
+;
 
 -- --------------------------- Procedimiento Almacenado -----------------------------
 -- --------------------------- 	Detalle Compra --------------------------------------
@@ -781,8 +762,6 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_agregarDetalleCompra(01, 30.00, 45 ,01, 01);
-call sp_agregarDetalleCompra(02, 15.99, 100 ,03, 03);
 
 -- --------------------------- Listar Detalle Compra -------------------------------
 Delimiter $$
@@ -815,7 +794,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_BuscarDetalleCompra(01);
 
 -- ---------------------------- Eliminar Detalle Compra ----------------------------
 Delimiter $$
@@ -826,7 +804,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_EliminarDetalleCompra(02);
 
 -- --------------------------- Editar Detalle Compra -------------------------------
 Delimiter $$
@@ -843,13 +820,11 @@ Delimiter $$
 		end $$
 delimiter ;   
 
-call sp_EditarDetalleCompra(01, 35.99, 76, 01, 01);
-call sp_ListarDetalleCompra();
 
--- --------------------------- Procedimiento Almacenado -----------------------------
+
 -- --------------------------- 	Empleados --------------------------------------
 
--- --------------------------- Agregar Empleados ------------------------------
+
 Delimiter $$
 	create procedure sp_agregarEmpleados (in codigoEmpleado int, in nombresEmpleado varchar(50), in apellidosEmpleado varchar(50), in sueldo decimal(10, 2), in direccion varchar(150),
     in turno varchar(15), in codigoCargoEmpleado int)
@@ -859,9 +834,6 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_agregarEmpleados(01, 'Wicho', 'Hernandez' , 10000.50, 'En su casa', 'Vespertina', 01);
-call sp_agregarEmpleados(02, 'Neto', 'Bran' , 2500.50, 'En su hogar', 'Matutina', 03);
-call sp_agregarEmpleados(03, 'Jose', 'Pirulo', 3033.08, 'Estadio los rojos', 'Vespertina', 01);
 
 -- --------------------------- Listar Empleados -------------------------------
 Delimiter $$
@@ -898,7 +870,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_BuscarEmpleados(01);
 
 -- ---------------------------- Eliminar Empleados ----------------------------
 Delimiter $$
@@ -909,7 +880,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_EliminarEmpleados(02);
 
 -- --------------------------- Editar Empleados -------------------------------
 Delimiter $$
@@ -929,13 +899,10 @@ Delimiter $$
 		end $$
 delimiter ;   
 
-call sp_EditarEmpleados(01, 'Luis', 'Garcia' , 10001.50, 'En su mansion', 'Matutina', 01);
-call sp_ListarEmpleados();
 
--- --------------------------- Procedimiento Almacenado -----------------------------
--- --------------------------- Factura --------------------------------------
 
--- --------------------------- Agregar Factura ------------------------------
+-- ------------------------------------------------------------------------------ Factura -------------------------------------------------------------------------------------------------------------------------
+
 Delimiter $$
 	create procedure sp_agregarFactura (in numeroFactura int, in estado varchar(50), in totalFactura decimal(10, 2), in fechaFactura date, 
     in codigoCliente int, in codigoEmpleado int)
@@ -945,9 +912,6 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_agregarFactura(01, 'pagada', 102.99, '2024-01-01', 01, 01);
-call sp_agregarFactura(02, 'pagada', 56.98, '2023-02-02', 01, 03);
-call sp_agregarFactura(03, 'pagada', 49.86, '2024-06-06', 01, 03);
 
 -- --------------------------- Listar Factura -------------------------------
 Delimiter $$
@@ -982,8 +946,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_BuscarFactura(01);
-
 -- ---------------------------- Eliminar Factura ----------------------------
 Delimiter $$
 	create procedure sp_EliminarFactura(in numFact int)
@@ -993,7 +955,6 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_EliminarFactura(02);
 
 -- --------------------------- Editar Factura -------------------------------
 Delimiter $$
@@ -1011,8 +972,7 @@ Delimiter $$
 		end $$
 delimiter ;   
 
-call sp_EditarFactura(01, 'pagada', 106.99, '2024-02-08', 01, 01);
-call sp_ListarFactura();
+
 
 -- --------------------------- Procedimiento Almacenado -----------------------------
 -- ---------------------------  Detalle Factura --------------------------------------
@@ -1026,8 +986,6 @@ Delimiter $$
 	end $$
 Delimiter ;
 
-call sp_agregarDetalleFactura(01, 30.50, 5, 01, 01);
-call sp_agregarDetalleFactura(02, 15.50, 10, 03, 03);
 
 -- --------------------------- Listar Detalle Factura -------------------------------
 Delimiter $$
@@ -1050,17 +1008,17 @@ Delimiter $$
 	create procedure sp_BuscarDetalleFactura (in numDetalleF int)
 		begin
 			select
-			DetalleF.codigoDetalleFactura,
-			DetalleF.precioUnitario,
-			DetalleF.cantidad,
-			DetalleF.numeroFactura,
-            DetalleF.codigoProducto
+			D.codigoDetalleFactura,
+			D.precioUnitario,
+			D.cantidad,
+			D.numeroFactura,
+            D.codigoProducto
 			from DetalleFactura DetalleF
 			where codigoDetalleFactura = numDetalleF;
 	end $$
 delimiter ;
 
-call sp_BuscarDetalleFactura(01);
+
 
 -- ---------------------------- Eliminar Detalle Factura ----------------------------
 Delimiter $$
@@ -1071,22 +1029,20 @@ Delimiter $$
 	end $$
 delimiter ;
 
-call sp_EliminarDetalleFactura(02);
+
 
 -- --------------------------- Editar Detalle Factura -------------------------------
 Delimiter $$
-	create procedure sp_EditarDetalleFactura(in numDetalleF int, in precioU decimal(10, 2), in cant int, in numF int, in codPro int)
+	create procedure sp_EditarDetalleFactura(in numD int, in precioU decimal(10, 2), in cant int, in numF int, in codPro int)
 		begin
-			update DetalleFactura DetalleF
+			update DetalleFactura D
 				set
-                DetalleF.codigoDetalleFactura = numDetalleF,
-                DetalleF.precioUnitario = precioU,
-				DetalleF.cantidad = cant,
-				DetalleF.numeroFactura = numF,
-                DetalleF.codigoProducto = codPro
-				where codigoDetalleFactura = numDetalleF;
+                D.codigoDetalleFactura = numD,
+                D.precioUnitario = precioU,
+				D.cantidad = cant,
+				D.numeroFactura = numF,
+                D.codigoProducto = codPro
+				where codigoDetalleFactura = numD;
 		end $$
 delimiter ;   
 
-call sp_EditarDetalleFactura(01, 34.89, 6, 01, 01);
-call sp_ListarDetalleFactura();
